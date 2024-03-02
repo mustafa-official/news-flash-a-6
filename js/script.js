@@ -69,9 +69,15 @@ const addToCard = (title, viewCount) => {
     div.className = `flex items-center gap-2 bg-white p-3 rounded-lg my-3 text-[#12132D] text-[16px] mulish font-black`;
     const p = document.createElement('p');
     p.innerText = title;
+    const imgDiv = document.createElement('div');
+    imgDiv.innerHTML = `
+    <img class="w-full h-full" src="./images/eye.png" alt="">
+    `;
+    console.log(imgDiv);
     const p2 = document.createElement('p');
     p2.innerText = viewCount;
     div.appendChild(p);
+    div.appendChild(imgDiv);
     div.appendChild(p2);
     saveCard.appendChild(div);
 
