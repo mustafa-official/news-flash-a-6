@@ -207,7 +207,7 @@ const searchBtn = () => {
         }, 2000);
         categoryPost(getValue);
     } else {
-        
+        alert('Please type any category');
     }
 }
 
