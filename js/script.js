@@ -14,7 +14,6 @@ const allPost = async () => {
     const data = await res.json();
     const allPostContainer = document.getElementById('all-post-container');
     data.posts.forEach((item) => {
-        // console.log(item.title);
         const a = item.title;
         const titleModify = a.replace(/'/g, "&acute;");
 
@@ -196,10 +195,20 @@ const categoryPost = async (category) => {
 
 }
 const searchBtn = () => {
-
-    const inputField = document.getElementById('text-field').value;
-    // searchLoader(inputField);
-    categoryPost(inputField);
+    const inputField = document.getElementById('text-field');
+    const getValue = inputField.value
+    if (getValue) {
+        spinnerOne.classList.remove('hidden');
+        allPostContainer.classList.add('hidden');
+        setTimeout(() => {
+            spinnerOne.classList.add('hidden');
+            allPostContainer.classList.remove('hidden');
+            document.getElementById('text-field').value = '';
+        }, 2000);
+        categoryPost(getValue);
+    } else {
+        
+    }
 }
 
 allPost();
