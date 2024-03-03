@@ -3,7 +3,9 @@ const allPost = async () => {
     const data = await res.json();
     const allPostContainer = document.getElementById('all-post-container');
     data.posts.forEach((item) => {
-        // console.log(item.isActive);
+        // console.log(item.title);
+        const a = item.title;
+        const titleModify = a.replace(/'/g, "&acute;");
 
         const div = document.createElement('div');
         div.innerHTML = `
@@ -21,7 +23,7 @@ const allPost = async () => {
                                     <p># ${item.category}</p>
                                     <p>Author : ${item.author.name}</p>
                                 </div>
-                                <p class="text-[#12132D] mulish font-black text-[18px] lg:text-xl">${item.title}</p>
+                                <p class="text-[#12132D] mulish font-black text-[18px] lg:text-xl">${titleModify}</p>
                                 <p class="text-[#12132D99] text-[16px] mt-2 inter">${item.description}</p>
                                 <hr class="border-dashed border-[1px] border-[#12132D40] my-5">
                                 <div class="flex flex-wrap justify-between items-center">
@@ -40,7 +42,7 @@ const allPost = async () => {
                                         </div>
 
                                     </div>
-                                    <button onclick="addToCard('${item.title}', '${item.view_count}')"><img class="mt-4 lg:mt-0" src="./images/message.png" alt=""></button>
+                                    <button onclick="addToCard('${titleModify}', '${item.view_count}')"><img class="mt-4 lg:mt-0" src="./images/message.png" alt=""></button>
                                 </div>
                                 
                             </div>
@@ -54,14 +56,14 @@ const allPost = async () => {
             onlineCheck.classList.add('bg-red-500');
         }
         allPostContainer.appendChild(div);
-
-
     })
 
 }
 
 let cardCounter = 0;
 const addToCard = (title, viewCount) => {
+    console.log(title);
+
     cardCounter++;
     const saveCard = document.getElementById('save-card');
     console.log(title, viewCount);
@@ -84,8 +86,39 @@ const addToCard = (title, viewCount) => {
     const markCount = document.getElementById('mark-count');
     markCount.innerText = cardCounter;
 
+};
+
+const latestPost = async () => {
+    const res = await fetch('https://openapi.programming-hero.com/api/retro-forum/latest-posts');
+    const data = await res.json();
+    const latestPostContainer = document.getElementById('latest-post-container');
+    data.forEach((item) => {
+        console.log(item.cover_image);
+        const div = document.createElement('div');
+        div.className = `border border-[#12132D26] p-6 rounded-2xl`;
+        div.innerHTML = `
+        <div class="h-[190px]"><img class="rounded-xl" src="${item.cover_image}" alt=""></div>
+                    <div class="flex items-center gap-2 mt-0 lg:mt-16 my-3">
+                        <img src="./images/date.png" alt="">
+                        <p class="mulish text-[18px] text-[#12132D99]">${item.author.posted_date ? item.author.posted_date : "No publish date"}</p>
+                    </div>
+                    <p class="text-[18px] lg:text-xl text-[#12132D] font-black mulish">${item.title}</p>
+                    <p class="mulish text-[18px] text-[#12132D99] my-3">${item.description}</p>
+                    <div class="flex lg:flex-row flex-col gap-4">
+                        <div class="w-[50px] h-[50px]"><img class="rounded-full" src="${item.profile_image}" alt=""></div>
+                        <div>
+                            <p class="text-[18px] lg:text-xl text-[#12132D] font-extrabold mulish">${item.author.name}</p>
+                            <p class="mulish text-[18px] text-[#12132D99]">${item.author.designation ? item.author.designation : "Unknown"}</p>
+                        </div>
+                    </div>
+        `;
+        latestPostContainer.appendChild(div)
+
+
+    });
+
 }
 
 
-
-allPost()
+allPost();
+latestPost();
