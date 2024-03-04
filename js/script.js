@@ -72,27 +72,22 @@ const allPost = async () => {
 
 let cardCounter = 0;
 const addToCard = (title, viewCount) => {
-    console.log(title);
-
     cardCounter++;
     const saveCard = document.getElementById('save-card');
     console.log(title, viewCount);
     const div = document.createElement('div');
-    div.className = `flex items-center gap-2 bg-white p-3 rounded-lg my-3 text-[#12132D] text-[16px] mulish font-black`;
+    div.className = `flex items-center justify-between gap-3 lg:gap-5 bg-white p-3 lg:p-7 rounded-lg my-3 text-[#12132D] text-[15px] lg:text-[16px] mulish font-bold lg:font-black`;
     const p = document.createElement('p');
     p.innerText = title;
     const imgDiv = document.createElement('div');
+    imgDiv.className = `flex items-center gap-3 justify-center pr-[10px] lg:pr-[0px]`;
     imgDiv.innerHTML = `
     <img class="w-full h-full" src="./images/eye.png" alt="">
+    <div>${viewCount}</div>
     `;
-    console.log(imgDiv);
-    const p2 = document.createElement('p');
-    p2.innerText = viewCount;
     div.appendChild(p);
     div.appendChild(imgDiv);
-    div.appendChild(p2);
     saveCard.appendChild(div);
-
     const markCount = document.getElementById('mark-count');
     markCount.innerText = cardCounter;
 
@@ -106,8 +101,8 @@ const latestPost = async () => {
         const div = document.createElement('div');
         div.className = `border border-[#12132D26] p-6 rounded-2xl`;
         div.innerHTML = `
-        <div class="h-[190px]"><img class="rounded-xl" src="${item.cover_image}" alt=""></div>
-                    <div class="flex items-center gap-2 mt-0 lg:mt-16 my-3">
+        <div class="h-auto"><img class="rounded-xl" src="${item.cover_image}" alt=""></div>
+                    <div class="flex items-center gap-2 mt-4 my-3">
                         <img src="./images/date.png" alt="">
                         <p class="mulish text-[18px] text-[#12132D99]">${item.author.posted_date ? item.author.posted_date : "No publish date"}</p>
                     </div>
